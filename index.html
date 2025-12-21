@@ -4,6 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>学生成绩查询入口</title>
+    
+    <!-- ============== 链接配置区（从这里开始修改） ============== -->
+    <script>
+        // 在这里一次性修改所有链接
+        var LINKS = {
+            // 主查询入口链接
+            MAIN: "https://4ac34728.r15.cpolar.top/school-0.0.1-SNAPSHOT/",
+            
+            // 备用入口一链接
+            BACKUP1: "http://jp.3.frp.one:62230/school-0.0.1-SNAPSHOT/",
+            
+            // 备用入口二链接
+            BACKUP2: "http://ec93b3d4.natappfree.cc/school-0.0.1-SNAPSHOT/"
+        };
+    </script>
+    <!-- ============== 链接配置区（修改到这里结束） ============== -->
+    
     <style>
         /* 基础重置 */
         * {
@@ -165,19 +182,6 @@
             padding: 18px;
         }
         
-        .link-url {
-            display: block;
-            padding: 14px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            font-family: monospace;
-            font-size: 14px;
-            color: #495057;
-            word-break: break-all;
-            margin-bottom: 15px;
-            border: 1px solid #e9ecef;
-        }
-        
         .btn {
             display: block;
             width: 100%;
@@ -331,7 +335,7 @@
                     <div class="link-badge">入口一</div>
                 </div>
                 <div class="link-body">
-                    <a href="https://4ac34728.r15.cpolar.top/school-0.0.1-SNAPSHOT/" class="btn" target="_blank">
+                    <a href="#" class="btn main-link" target="_blank">
                         <i class="fas fa-external-link-alt"></i> 点击进入成绩查询
                     </a>
                 </div>
@@ -350,8 +354,7 @@
                     <div class="link-badge">入口二</div>
                 </div>
                 <div class="link-body">
-                    
-                    <a href="http://jp.3.frp.one:62230/school-0.0.1-SNAPSHOT/" class="btn" target="_blank">
+                    <a href="#" class="btn backup1-link" target="_blank">
                         <i class="fas fa-external-link-alt"></i> 点击进入备用入口
                     </a>
                 </div>
@@ -370,8 +373,7 @@
                     <div class="link-badge">入口三</div>
                 </div>
                 <div class="link-body">
-                   
-                    <a href="http://ec93b3d4.natappfree.cc/school-0.0.1-SNAPSHOT/" class="btn" target="_blank">
+                    <a href="#" class="btn backup2-link" target="_blank">
                         <i class="fas fa-external-link-alt"></i> 点击进入备用入口
                     </a>
                 </div>
@@ -388,41 +390,41 @@
         </div>
     </div>
     
-    <!-- 简单的脚本，只用于显示效果 -->
+    <!-- 设置链接的脚本 -->
     <script>
-        // 设置最后更新日期为当天
-        document.getElementById('update-date').textContent = 
-            new Date().toLocaleDateString('zh-CN', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
-        
-        // 为所有外部链接添加提示（可选）
-        document.querySelectorAll('a[target="_blank"]').forEach(link => {
-            link.addEventListener('click', function() {
-                // 可以在这里添加统计代码（如果需要）
-                console.log('点击链接:', this.href);
-            });
-        });
-        
-        // 简单的复制链接功能（可选）
-        document.querySelectorAll('.link-url').forEach(div => {
-            div.style.cursor = 'pointer';
-            div.title = '点击复制链接';
-            div.addEventListener('click', function() {
-                const url = this.textContent;
-                navigator.clipboard.writeText(url).then(() => {
-                    const original = this.textContent;
-                    this.textContent = '已复制到剪贴板！';
-                    this.style.color = '#27ae60';
-                    setTimeout(() => {
-                        this.textContent = original;
-                        this.style.color = '';
-                    }, 1500);
+        // 从LINKS变量设置所有链接
+        document.addEventListener('DOMContentLoaded', function() {
+            // 设置主查询入口链接
+            document.querySelector('.main-link').href = LINKS.MAIN;
+            
+            // 设置备用入口一链接
+            document.querySelector('.backup1-link').href = LINKS.BACKUP1;
+            
+            // 设置备用入口二链接
+            document.querySelector('.backup2-link').href = LINKS.BACKUP2;
+            
+            // 设置最后更新日期为当天
+            document.getElementById('update-date').textContent = 
+                new Date().toLocaleDateString('zh-CN', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+            
+            // 为所有外部链接添加点击记录
+            document.querySelectorAll('a[target="_blank"]').forEach(link => {
+                link.addEventListener('click', function() {
+                    console.log('访问链接:', this.href);
                 });
             });
         });
+        
+        // 在控制台显示修改提示
+        console.log('📱 手机修改提示：');
+        console.log('只需修改文件开头的 LINKS 对象中的3个链接即可：');
+        console.log('1. LINKS.MAIN = "你的主链接"');
+        console.log('2. LINKS.BACKUP1 = "你的备用链接1"');
+        console.log('3. LINKS.BACKUP2 = "你的备用链接2"');
     </script>
 </body>
 </html>
