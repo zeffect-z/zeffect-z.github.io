@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学生成绩查询入口</title>
+    <style>
+        /* 基础重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+            background: linear-gradient(135deg, #1a73e8 0%, #0d47a1 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* 顶部标题 */
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            padding: 25px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+        
+        .header h1 i {
+            font-size: 28px;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 15px;
+            margin-top: 8px;
+        }
+        
+        /* 重要提示框 */
+        .alert {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-left: 5px solid #f39c12;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 25px;
+            color: #856404;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        .alert strong {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        
+        .alert strong i {
+            color: #e74c3c;
+        }
+        
+        .alert ul {
+            padding-left: 20px;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        
+        .alert li {
+            margin-bottom: 6px;
+        }
+        
+        /* 链接卡片 */
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+        
+        .link-card {
+            background: white;
+            border-radius: 16px;
+            padding: 0;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .link-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+        }
+        
+        .link-header {
+            display: flex;
+            align-items: center;
+            padding: 18px;
+            background: linear-gradient(135deg, #4776E6 0%, #8E54E9 100%);
+            color: white;
+        }
+        
+        .primary .link-header {
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+        }
+        
+        .link-icon {
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 20px;
+        }
+        
+        .link-title {
+            flex: 1;
+        }
+        
+        .link-title h3 {
+            font-size: 18px;
+            margin-bottom: 4px;
+        }
+        
+        .link-title .desc {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+        
+        .link-badge {
+            background: rgba(255, 255, 255, 0.3);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .link-body {
+            padding: 18px;
+        }
+        
+        .link-url {
+            display: block;
+            padding: 14px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            font-family: monospace;
+            font-size: 14px;
+            color: #495057;
+            word-break: break-all;
+            margin-bottom: 15px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: #3498db;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background: #2980b9;
+            transform: scale(1.02);
+        }
+        
+        .btn i {
+            margin-right: 8px;
+        }
+        
+        .primary .btn {
+            background: #2ecc71;
+        }
+        
+        .primary .btn:hover {
+            background: #27ae60;
+        }
+        
+        /* 状态标记 */
+        .status-tag {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        .status-ok {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-try {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        /* 最后更新 */
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 13px;
+            padding: 20px;
+        }
+        
+        .footer a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        
+        /* 移动端优化 */
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header {
+                padding: 20px 15px;
+            }
+            
+            .header h1 {
+                font-size: 20px;
+            }
+            
+            .link-header {
+                padding: 15px;
+            }
+            
+            .link-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+            
+            .btn {
+                padding: 14px;
+                font-size: 15px;
+            }
+        }
+        
+        /* 夜间模式支持 */
+        @media (prefers-color-scheme: dark) {
+            .link-body {
+                background: #1e1e1e;
+                color: #f0f0f0;
+            }
+            
+            .link-url {
+                background: #2d2d2d;
+                color: #ccc;
+                border-color: #444;
+            }
+        }
+    </style>
+    <!-- FontAwesome图标 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 顶部标题 -->
+        <div class="header">
+            <h1>
+                <i class="fas fa-graduation-cap"></i>
+                学生成绩查询系统
+            </h1>
+            <p>提供多个查询入口，请根据网络情况选择</p>
+        </div>
+        
+        <!-- 重要提示 -->
+        <div class="alert">
+            <strong><i class="fas fa-exclamation-triangle"></i> 重要提示</strong>
+            <p>由于网络环境差异，以下链接的访问情况可能不同：</p>
+            <ul>
+                <li>如果某个链接无法打开，请尝试其他备用链接</li>
+                <li>建议优先使用<b>主查询入口</b>，访问最稳定</li>
+                <li>如遇访问缓慢，可稍后重试或切换网络（WiFi/移动数据）</li>
+                <li>所有链接均为官方入口，请放心使用</li>
+            </ul>
+        </div>
+        
+        <!-- 查询链接列表 -->
+        <div class="links-container">
+            <!-- 链接1：主查询入口 -->
+            <div class="link-card primary">
+                <div class="link-header">
+                    <div class="link-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <div class="link-title">
+                        <h3>主查询入口 <span class="status-tag status-ok">推荐</span></h3>
+                        <div class="desc">教务系统官方入口，访问最稳定</div>
+                    </div>
+                    <div class="link-badge">入口一</div>
+                </div>
+                <div class="link-body">
+                    <div class="link-url" id="link1-url">https://jwxt.example.edu.cn/login</div>
+                    <a href="https://jwxt.example.edu.cn/login" class="btn" target="_blank">
+                        <i class="fas fa-external-link-alt"></i> 点击进入成绩查询
+                    </a>
+                </div>
+            </div>
+            
+            <!-- 链接2：备用入口一 -->
+            <div class="link-card">
+                <div class="link-header">
+                    <div class="link-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="link-title">
+                        <h3>备用入口一 <span class="status-tag status-try">备用</span></h3>
+                        <div class="desc">VPN访问入口，需连接校园网</div>
+                    </div>
+                    <div class="link-badge">入口二</div>
+                </div>
+                <div class="link-body">
+                    <div class="link-url" id="link2-url">https://vpn.example.edu.cn/score</div>
+                    <a href="https://vpn.example.edu.cn/score" class="btn" target="_blank">
+                        <i class="fas fa-external-link-alt"></i> 点击进入备用入口
+                    </a>
+                </div>
+            </div>
+            
+            <!-- 链接3：备用入口二 -->
+            <div class="link-card">
+                <div class="link-header">
+                    <div class="link-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="link-title">
+                        <h3>备用入口二 <span class="status-tag status-try">备用</span></h3>
+                        <div class="desc">移动端优化页面，手机访问更佳</div>
+                    </div>
+                    <div class="link-badge">入口三</div>
+                </div>
+                <div class="link-body">
+                    <div class="link-url" id="link3-url">https://m.example.edu.cn/cjcx</div>
+                    <a href="https://m.example.edu.cn/cjcx" class="btn" target="_blank">
+                        <i class="fas fa-external-link-alt"></i> 点击进入移动版
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 页脚 -->
+        <div class="footer">
+            <p>最后更新: <span id="update-date">2024年12月20日</span></p>
+            <p style="margin-top: 10px;">
+                <i class="fas fa-info-circle"></i> 
+                如有问题请联系教务处或系统管理员
+            </p>
+        </div>
+    </div>
+    
+    <!-- 简单的脚本，只用于显示效果 -->
+    <script>
+        // 设置最后更新日期为当天
+        document.getElementById('update-date').textContent = 
+            new Date().toLocaleDateString('zh-CN', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        
+        // 为所有外部链接添加提示（可选）
+        document.querySelectorAll('a[target="_blank"]').forEach(link => {
+            link.addEventListener('click', function() {
+                // 可以在这里添加统计代码（如果需要）
+                console.log('点击链接:', this.href);
+            });
+        });
+        
+        // 简单的复制链接功能（可选）
+        document.querySelectorAll('.link-url').forEach(div => {
+            div.style.cursor = 'pointer';
+            div.title = '点击复制链接';
+            div.addEventListener('click', function() {
+                const url = this.textContent;
+                navigator.clipboard.writeText(url).then(() => {
+                    const original = this.textContent;
+                    this.textContent = '已复制到剪贴板！';
+                    this.style.color = '#27ae60';
+                    setTimeout(() => {
+                        this.textContent = original;
+                        this.style.color = '';
+                    }, 1500);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
